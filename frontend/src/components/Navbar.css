@@ -1,0 +1,67 @@
+.navbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray2);
+}
+.navbar__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px; gap: 32px;
+}
+.navbar__logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: 0.1em;
+  color: var(--accent); flex-shrink: 0;
+}
+.navbar__links {
+  display: flex; align-items: center; gap: 28px;
+  flex: 1;
+}
+.navbar__links a {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted);
+  transition: color var(--transition);
+}
+.navbar__links a:hover, .navbar__links a.active { color: var(--white); }
+.navbar__actions { display: flex; align-items: center; gap: 16px; }
+.navbar__cart { position: relative; font-size: 1.3rem; }
+.cart-badge {
+  position: absolute; top: -8px; right: -8px;
+  background: var(--accent); color: var(--black);
+  font-size: 10px; font-weight: 700;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.navbar__user { position: relative; cursor: pointer; }
+.navbar__avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gray2); border: 1px solid var(--gray3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+}
+.navbar__dropdown {
+  position: absolute; top: calc(100% + 12px); right: 0;
+  background: var(--gray); border: 1px solid var(--gray2);
+  border-radius: var(--radius); min-width: 160px;
+  overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.navbar__dropdown a,
+.navbar__dropdown button {
+  display: block; width: 100%; padding: 12px 16px;
+  font-size: 13px; text-align: left; background: none; color: var(--white);
+  border-bottom: 1px solid var(--gray2); transition: background var(--transition);
+}
+.navbar__dropdown a:last-child, .navbar__dropdown button:last-child { border-bottom: none; }
+.navbar__dropdown a:hover, .navbar__dropdown button:hover { background: var(--gray2); }
+.navbar__hamburger {
+  display: none; background: none; color: var(--white); font-size: 1.2rem;
+}
+@media (max-width: 768px) {
+  .navbar__links {
+    display: none; position: fixed; top: 64px; left: 0; right: 0;
+    background: var(--black); flex-direction: column; padding: 24px;
+    border-bottom: 1px solid var(--gray2); gap: 20px;
+  }
+  .navbar__links.open { display: flex; }
+  .navbar__hamburger { display: block; }
+}

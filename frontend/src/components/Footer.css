@@ -1,0 +1,30 @@
+.footer {
+  background: var(--gray); border-top: 1px solid var(--gray2); margin-top: 80px;
+}
+.footer__inner {
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 48px; padding: 60px 0;
+}
+.footer__logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem;
+  letter-spacing: 0.1em; color: var(--accent);
+}
+.footer__brand p { color: var(--text-muted); margin-top: 8px; }
+.footer__links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.footer__links h4 {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--white); margin-bottom: 16px;
+}
+.footer__links a {
+  display: block; color: var(--text-muted); font-size: 13px;
+  margin-bottom: 10px; transition: color var(--transition);
+}
+.footer__links a:hover { color: var(--white); }
+.footer__bottom {
+  border-top: 1px solid var(--gray2); padding: 20px 0;
+}
+.footer__bottom p { color: var(--text-muted); font-size: 12px; }
+@media (max-width: 768px) {
+  .footer__inner { grid-template-columns: 1fr; }
+  .footer__links { grid-template-columns: repeat(2, 1fr); }
+}
