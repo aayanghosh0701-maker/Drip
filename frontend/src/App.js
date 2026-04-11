@@ -13,6 +13,9 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -45,6 +48,9 @@ function AppRoutes() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />

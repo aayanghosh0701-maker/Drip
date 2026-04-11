@@ -40,6 +40,9 @@ export default function Login() {
             <label>Password</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••" />
           </div>
+          <div className="forgot-link">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
           <button type="submit" className="btn btn-primary btn-full" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </button>

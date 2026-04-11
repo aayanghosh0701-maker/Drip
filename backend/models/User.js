@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, minlength: 6 },
     role: { type: String, enum: ["user", "admin"], default: "user" },
     avatar: { type: String, default: "" },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String },
+    verificationTokenExpiry: { type: Date },
+    resetPasswordToken: { type: String },
+    resetPasswordExpiry: { type: Date },
     address: {
       street: String,
       city: String,

@@ -15,3 +15,10 @@
 .auth-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 28px; }
 .auth-switch { text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-muted); }
 .auth-switch a { color: var(--accent); font-weight: 600; }
+
+.auth-success { text-align: center; padding: 20px 0; }
+.auth-success-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-success h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.auth-success p { color: var(--text-muted); font-size: 13px; }
+.forgot-link { text-align: right; margin-top: -12px; margin-bottom: 16px; }
+.forgot-link a { font-size: 12px; color: var(--accent); }

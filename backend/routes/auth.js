@@ -1,7 +1,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
+const { sendVerificationEmail, sendPasswordResetEmail } = require("../utils/email");
 const router = express.Router();
 
 const signToken = (id) =>
@@ -14,9 +16,28 @@ router.post("/register", async (req, res) => {
     if (await User.findOne({ email }))
       return res.status(400).json({ message: "Email already in use" });
 
-    const user = await User.create({ name, email, password });
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    const user = await User.create({
+      name, email, password,
+      verificationToken,
+      verificationTokenExpiry,
+    });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, name, verificationToken);
+    } catch (emailErr) {
+      console.error("Email error:", emailErr.message);
+    }
+
     const token = signToken(user._id);
-    res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.status(201).json({
+      token,
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified },
+      message: "Registration successful! Please check your email to verify your account.",
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -31,7 +52,91 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
 
     const token = signToken(user._id);
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    res.json({
+      token,
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified },
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// @GET /api/auth/verify-email
+router.get("/verify-email", async (req, res) => {
+  try {
+    const { token } = req.query;
+    const user = await User.findOne({
+      verificationToken: token,
+      verificationTokenExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) return res.status(400).json({ message: "Invalid or expired verification link" });
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpiry = undefined;
+    await user.save();
+
+    res.json({ message: "Email verified successfully! You can now login." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// @POST /api/auth/resend-verification
+router.post("/resend-verification", protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user.isVerified) return res.status(400).json({ message: "Email already verified" });
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    user.verificationToken = verificationToken;
+    user.verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await user.save();
+
+    await sendVerificationEmail(user.email, user.name, verificationToken);
+    res.json({ message: "Verification email sent!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// @POST /api/auth/forgot-password
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "No account found with this email" });
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    await user.save();
+
+    await sendPasswordResetEmail(email, user.name, resetToken);
+    res.json({ message: "Password reset email sent! Check your inbox." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// @POST /api/auth/reset-password
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { token, password } = req.body;
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpiry: { $gt: Date.now() },
+    });
+
+    if (!user) return res.status(400).json({ message: "Invalid or expired reset link" });
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiry = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successfully! You can now login." });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -46,7 +151,7 @@ router.get("/me", protect, (req, res) => {
 router.put("/profile", protect, async (req, res) => {
   try {
     const updates = req.body;
-    if (updates.password) delete updates.password; // handle separately
+    if (updates.password) delete updates.password;
     const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true }).select("-password");
     res.json({ user });
   } catch (err) {
