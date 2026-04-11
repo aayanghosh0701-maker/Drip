@@ -9,8 +9,9 @@
 }
 .profile-avatar-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
 .profile-avatar-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.profile-right { display: flex; flex-direction: column; gap: 0; }
 .profile-form { padding: 32px; }
-.profile-form h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+.profile-form h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; color: var(--white); }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 768px) {
   .profile-layout { grid-template-columns: 1fr; }

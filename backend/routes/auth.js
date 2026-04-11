@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "Email already in use" });
 
     const verificationToken = crypto.randomBytes(32).toString("hex");
-    const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     const user = await User.create({
       name, email, password,
@@ -25,7 +25,6 @@ router.post("/register", async (req, res) => {
       verificationTokenExpiry,
     });
 
-    // Send verification email
     try {
       await sendVerificationEmail(email, name, verificationToken);
     } catch (emailErr) {
@@ -110,7 +109,7 @@ router.post("/forgot-password", async (req, res) => {
 
     const resetToken = crypto.randomBytes(32).toString("hex");
     user.resetPasswordToken = resetToken;
-    user.resetPasswordExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    user.resetPasswordExpiry = new Date(Date.now() + 60 * 60 * 1000);
     await user.save();
 
     await sendPasswordResetEmail(email, user.name, resetToken);
@@ -137,6 +136,27 @@ router.post("/reset-password", async (req, res) => {
     await user.save();
 
     res.json({ message: "Password reset successfully! You can now login." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// @PUT /api/auth/change-password
+router.put("/change-password", protect, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user._id);
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) return res.status(400).json({ message: "Current password is incorrect" });
+
+    if (newPassword.length < 6)
+      return res.status(400).json({ message: "New password must be at least 6 characters" });
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: "Password changed successfully!" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
