@@ -12,7 +12,7 @@ export default function AdminLayout({ children, title }) {
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">
-        <div className="admin-brand">DRIP <span>Admin</span></div>
+        <div className="admin-brand">LUXO<span>Admin</span></div>
         <nav className="admin-nav">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `admin-nav-link ${isActive ? "active" : ""}`}>
