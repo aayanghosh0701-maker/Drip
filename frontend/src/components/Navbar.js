@@ -20,7 +20,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="container navbar__inner">
-        <Link to="/" className="navbar__logo">DRIP</Link>
+        <Link to="/" className="navbar__logo">AURA</Link>
 
         <div className={`navbar__links ${menuOpen ? "open" : ""}`}>
           <NavLink to="/shop" onClick={() => setMenuOpen(false)}>All</NavLink>

@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <span className="footer__logo">DRIP</span>
+          <span className="footer__logo">AURA</span>
           <p>Wear what you feel.</p>
         </div>
         <div className="footer__links">
@@ -35,7 +35,7 @@ export default function Footer() {
       </div>
       <div className="footer__bottom">
         <div className="container">
-          <p>© {new Date().getFullYear()} DRIP. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} AURA. All rights reserved.</p>
         </div>
       </div>
     </footer>

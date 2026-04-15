@@ -42,7 +42,7 @@ export default function ResetPassword() {
   return (
     <div className="auth-page">
       <div className="auth-card card">
-        <div className="auth-logo">DRIP</div>
+        <div className="auth-logo">AURA</div>
         <h2>Reset Password</h2>
         <p className="auth-sub">Enter your new password</p>
         <form onSubmit={handleSubmit}>

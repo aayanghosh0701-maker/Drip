@@ -1,11 +1,11 @@
-# DRIP — Fullstack Clothing Store
+# AURA — Fullstack Clothing Store
 
 A complete fullstack clothing e-commerce website built with React + Node/Express + MongoDB.
 
 ## 🗂 Project Structure
 
 ```
-drip/
+aura/
 ├── frontend/          # React app
 │   ├── src/
 │   │   ├── components/   # Navbar, Footer, ProductCard
@@ -77,7 +77,7 @@ npm start              # Starts on http://localhost:3000
 ## 👤 Default Admin Account (after seeding)
 
 ```
-Email:    admin@drip.com
+Email:    admin@aura.com
 Password: admin123
 ```
 

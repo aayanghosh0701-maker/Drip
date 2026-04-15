@@ -18,7 +18,7 @@ export default function VerifyEmail() {
   return (
     <div className="auth-page">
       <div className="auth-card card" style={{ textAlign: "center" }}>
-        <div className="auth-logo">DRIP</div>
+        <div className="auth-logo">AURA</div>
         {status === "loading" && (
           <>
             <h2>Verifying...</h2>

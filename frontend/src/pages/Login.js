@@ -28,7 +28,7 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card card">
-        <div className="auth-logo">DRIP</div>
+        <div className="auth-logo">AURA</div>
         <h2>Welcome Back</h2>
         <p className="auth-sub">Sign in to your account</p>
         <form onSubmit={handleSubmit}>

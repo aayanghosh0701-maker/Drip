@@ -46,10 +46,10 @@ async function seed() {
     console.log("🗑  Cleared existing products");
     const created = await Product.insertMany(products);
     console.log(`✅ Inserted ${created.length} products`);
-    const existing = await User.findOne({ email: "admin@drip.com" });
+    const existing = await User.findOne({ email: "admin@aura.com" });
     if (!existing) {
-      await User.create({ name: "Admin", email: "admin@drip.com", password: "admin123", role: "admin" });
-      console.log("✅ Admin created: admin@drip.com / admin123");
+      await User.create({ name: "Admin", email: "admin@aura.com", password: "admin123", role: "admin" });
+      console.log("✅ Admin created: admin@aura.com / admin123");
     } else {
       console.log("ℹ️  Admin already exists");
     }

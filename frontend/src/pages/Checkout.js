@@ -39,7 +39,7 @@ export default function Checkout() {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
         amount: data.amount,
         currency: "INR",
-        name: "DRIP",
+        name: "AURA",
         description: "Order Payment",
         order_id: data.orderId,
         prefill: {

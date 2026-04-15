@@ -20,7 +20,7 @@ app.use("/api/payment", require("./routes/payment"));
 app.use("/api/admin", require("./routes/admin"));
 
 // Health check
-app.get("/", (req, res) => res.json({ message: "DRIP API running 🔥" }));
+app.get("/", (req, res) => res.json({ message: "AURA API running 🔥" }));
 
 // Connect to MongoDB
 mongoose

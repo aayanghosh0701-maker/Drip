@@ -31,7 +31,7 @@ export default function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card card">
-        <div className="auth-logo">DRIP</div>
+        <div className="auth-logo">AURA</div>
         <h2>Create Account</h2>
         <p className="auth-sub">Join the community</p>
         <form onSubmit={handleSubmit}>
